@@ -29,12 +29,32 @@ fi
 # check whether the service is running or not
  
 status=$(pgrep ${service})
-if [[ ${status} -gt 0 ]]
-then
-	echo -e "${service} is running" && exit 0
-else
-	echo -e "${service} is not running" && exit 1
-fi
+
+#if [[ ${status} -gt 0 ]]
+#then
+#	echo -e "${service} is running" && exit 0
+#else
+#	echo -e "${service} is not running" && exit 1
+#fi
+
+#setting counter
+
+counter=0
+
+while [[ "${status}" -gt 0 ]]
+do
+counter=$((counter+1))
+
+# shows the echo statement once then runs the echo statement in the background
+
+	if [[ ${counter} = 1 ]]
+	then
+		echo -e "${service} is running"
+	 
+	else 
+		echo -e "${service} is running" > /dev/null
+	fi
+done
 
 
-
+echo -e "${service} is not running"
